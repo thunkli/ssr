@@ -3,6 +3,7 @@ const Koa = require('koa');
 const route = require('koa-route');
 const serve = require('koa-static');
 const views = require('koa-views');
+const clientRoute = require('./router/index.js');
 
 const app = new Koa();
 // Must be used before any router is used
@@ -11,13 +12,9 @@ app.use(views(__dirname + '/views', {
         html: 'handlebars'
     }
 }));
-// const home = ctx => {
-//     console.log(ctx);
-//     ctx.state = { title: 'home', author: 'thunkli' }
-//     return ctx.render('./home.hbs')
-// }
 
 
+app.use(clientRoute)
 
 const about = ctx => {
     ctx.response.type = 'html';
@@ -33,7 +30,7 @@ const notFound = ctx => {
 // app.use(route.get('/', home));
 app.use(route.get('/about', about));
 app.use(route.get('/error', error));
-// app.use(route.get('/404', notFound));
+app.use(route.get('/404', notFound));
 
 const main = serve(path.join(__dirname));
 app.use(main);
