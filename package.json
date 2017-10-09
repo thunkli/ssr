@@ -9,6 +9,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "koa": "^2.3.0"
+    "koa": "^2.3.0",
+    "koa-route": "^3.2.0",
+    "koa-static": "^4.0.1",
+    "koa-views": "^6.1.1"
+  },
+  "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   }
 }
