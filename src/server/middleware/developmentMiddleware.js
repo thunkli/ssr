@@ -8,7 +8,7 @@ import { devMiddleware, hotMiddleware } from 'koa-webpack-middleware';
 // file during development with webpack and hot reloading
 export function mockProductionStaticFiles() {
   return async(ctx, next) => {
-    if (ctx.path === '/dist/vendor.bundle.js' || ctx.path === '/dist/styles.css') {
+    if (ctx.path === '/build/vendor.js' || ctx.path === '/build/styles.css') {
       ctx.body =
         "/*Mocked files for development " +
         "(not using separate bundle files for vendor" +

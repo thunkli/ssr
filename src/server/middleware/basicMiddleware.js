@@ -30,7 +30,7 @@ const oneDay = oneHour * 24;
 
 export function serveStaticFiles() {
   const staticFolder = mount('/static', serve(`static`));
-  const distFolder = mount('/dist', serve(`dist`));
+  const distFolder = mount('/build', serve(`build`));
   const favicons = serve(`static/favicon`, { maxage: oneDay * 2 });
 
   return compose([favicons, staticFolder, distFolder]);

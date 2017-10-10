@@ -1,4 +1,4 @@
-const { join } = require('path');
+const {join} = require('path');
 const webpack = require('webpack');
 
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -15,7 +15,7 @@ module.exports = {
     ) : (
         {
             bundle: [join(__dirname, './src/utils/polyfills.js'), 'isomorphic-fetch', 'regenerator-runtime/runtime', './src/crossover/entry.js'],
-            vendor: ['react', 'react-dom'],
+            // vendor: ['react', 'react-dom'],
         }
     ),
     target: 'web',
@@ -59,9 +59,23 @@ module.exports = {
                 loader: prod ? (
                     ExtractTextPlugin.extract({
                         fallback: 'style-loader',
-                        loader: [
+                        use: [
                             'css-loader',
-                            'postcss-loader',
+                            {
+                                loader: 'postcss-loader',
+                                options: {
+                                    plugins: function () {
+                                        return [
+                                            require('autoprefixer')({
+                                                browsers: [
+                                                    "Android >= 4",
+                                                    "iOS >= 7"
+                                                ]
+                                            })
+                                        ];
+                                    }
+                                }
+                            },
                             'sass-loader',
                         ],
                     })
@@ -78,12 +92,7 @@ module.exports = {
                 NODE_ENV: JSON.stringify('development'),
                 BABEL_ENV: JSON.stringify('client-dev'),
             },
-        }),
-        new webpack.LoaderOptionsPlugin({
-            options: {
-                postcss: [autoprefixer({ browsers: ['> 1%', 'last 2 versions', 'Opera >= 12', 'Chrome >= 25', 'Firefox >= 13', 'ie >= 9'] })],
-            },
-        }),
+        })
     ]) : ([
         new webpack.LoaderOptionsPlugin({
             minimize: true,
@@ -108,6 +117,13 @@ module.exports = {
                 BABEL_ENV: JSON.stringify('client-build'),
                 APP_ENV: JSON.stringify('browser'),
             },
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            }
         }),
         new ExtractTextPlugin("styles.css"),
     ]),
