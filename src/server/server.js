@@ -1,23 +1,25 @@
 import 'babel-polyfill';
 
 import Koa from 'koa';
+
+const views = require('koa-views');
 import router from './router';
 
 import {
-  serverLogging,
-  baseErrorHandling,
-  serveStaticFiles,
-  compressResponse,
+    serverLogging,
+    baseErrorHandling,
+    serveStaticFiles,
+    compressResponse,
 } from './middleware/basicMiddleware';
 
 import {
-  webpackMiddleware,
-  mockProductionStaticFiles,
+    webpackMiddleware,
+    mockProductionStaticFiles,
 } from './middleware/developmentMiddleware';
 
 import {
-  injectState,
-  renderReact,
+    injectState,
+    renderReact,
 } from './middleware/crossoverMiddleware';
 
 // check for production, mainly used to disable
@@ -26,17 +28,22 @@ import {
 const prod = process.env.NODE_ENV !== 'development';
 
 const app = new Koa();
+app.use(views(__dirname + '/views', {
+    map: {
+        html: 'handlebars'
+    }
+}));
 
 // Development stuff (enable Webpack hot reloading)
 if (!prod) {
-  // Ensure that for building the client code,
-  // we're using the client babel settings
-  process.env.BABEL_ENV = 'client-dev';
+    // Ensure that for building the client code,
+    // we're using the client babel settings
+    process.env.BABEL_ENV = 'client-dev';
 
-  app.use(mockProductionStaticFiles());
-  app.use(webpackMiddleware());
+    app.use(mockProductionStaticFiles());
+    app.use(webpackMiddleware());
 } else {
-  console.log("Production environment");
+    console.log("Production environment");
 }
 
 app.use(serverLogging());

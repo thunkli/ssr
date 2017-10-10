@@ -15,7 +15,10 @@
     "react"
   ],
   "plugins": [
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-decorators-legacy",
+    "transform-function-bind",
+    "transform-class-properties"
   ],
   "ignore": []
 }

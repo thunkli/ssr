@@ -1,33 +1,14 @@
-import React from 'react'
-import {renderToString} from 'react-dom/server'
-import {StaticRouter} from 'react-router'
+import makeRouter from 'koa-router';
 
-import { matchRoutes, renderRoutes } from 'react-router-config'
-// import {Provider} from 'react-redux'
-// import routes from '../../client/routes'
+const router = makeRouter();
 
-class Home extends Component {
-    render() {
-        return <h1>Hello, {this.props.name}</h1>;
-    }
-}
+router.get('/*', async(ctx, next) => {
+    console.log("Setting counter random value and getting a random user profile");
 
+    await ctx.state.mobx.CounterStore.setRandomNumber();
+    await ctx.state.mobx.UserStore.getNewRandomUser();
 
-async function clientRoute(ctx, next) {
-    console.log(ctx)
-    await ctx.render('index', {
-        root: renderToString(
-            <StaticRouter
-                location={req.url}
-                context={context}
-            >
-                <Home/>
-            </StaticRouter>
-        ),
-        title: 'home',
-        author: 'thunkli'
-        //state: store.getState()
-    })
-}
+    await next();
+});
 
-export default clientRoute
+export default router;
