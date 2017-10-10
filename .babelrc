@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "useBuiltIns": "entry",
+        "targets": {
+          "browsers": [
+            "Android >= 4",
+            "iOS >= 7"
+          ]
+        }
+      }
+    ],
+    "react"
+  ],
+  "plugins": [
+    "transform-object-rest-spread"
+  ],
+  "ignore": []
+}

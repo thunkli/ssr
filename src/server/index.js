@@ -37,9 +37,6 @@ app.use(main);
 
 
 
-
-
-
 //error
 const handler = async (ctx, next) => {
     try {
