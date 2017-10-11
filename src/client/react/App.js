@@ -20,7 +20,7 @@ export default class App extends Component {
     return (
       <div className="layout">
         <img src={logo} alt="Isn't it dainty?" />
-        <a target="_blank" rel="noopener noreferrer" href="https://github.com/lostpebble/koa-mobx-react-starter" className="blurb"><GithubIcon />koa-mobx-react-starter</a>
+        <a target="_blank" href="#" className="blurb"><GithubIcon />koa-mobx-react-starter</a>
         <div className="tabs">
           <IndexLink to="/" className="tab" activeClassName="selected">User Profile</IndexLink>
           <Link to="/counter" className="tab" activeClassName="selected">Counter</Link>

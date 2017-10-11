@@ -1,5 +1,4 @@
 # ssr
-## Get Going:
 
 #### For starters:
 

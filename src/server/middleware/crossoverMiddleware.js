@@ -58,8 +58,6 @@ export function renderReact() {
                 author: 'thunkLi'
                 //state: store.getState()
             })
-        } else {
-            await next()
         }
 
     };
